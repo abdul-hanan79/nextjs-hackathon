@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-const CardSpaceWalking = (props) => {
+const CardSpaceWalking = (props:any) => {
     return (
         <div className='card-space-walking'>
             <Card className='space-walking' style={{ width: 'auto' }}>

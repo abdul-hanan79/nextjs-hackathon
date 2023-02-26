@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AuctionTimer = (props) => {
+const AuctionTimer = (props:any) => {
     return (
         <div className='auction-timer text-center'>
             <p className='auction-timer-heading'>Auction ends in</p>

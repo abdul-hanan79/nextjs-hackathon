@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-const CardTopCreators = (props) => {
+const CardTopCreators = (props:any) => {
     return (
         <div className='top-creators-card-div'>
             <Card className="top-creators-card " style={{ width: 'auto' }}>

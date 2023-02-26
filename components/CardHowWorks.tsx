@@ -2,7 +2,7 @@ import React from 'react'
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-const CardHowWorks = (props) => {
+const CardHowWorks = (props:any) => {
     return (
         <div className='how-works-card-div'>
             <Card className="how-works-card " style={{ width: 'auto' }}>

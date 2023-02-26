@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-const CardBrowseCategories = (props) => {
+const CardBrowseCategories = (props:any) => {
     return (
         <div className='browse-categories-card-div'>
             <Card className="browse-categories-card " style={{ width: '90%' }}>

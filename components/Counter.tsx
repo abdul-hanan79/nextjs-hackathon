@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Counter = (props) => {
+const Counter = (props:any) => {
     return (
         <div className='counter-div'>
             <h3 className='counter-heading'>{props.number}+</h3>

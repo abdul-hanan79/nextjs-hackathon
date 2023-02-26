@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 
-const CardDiscover = (props) => {
+const CardDiscover = (props:any) => {
     return (
         <div className='card-discover'>
             <Card className='card-main-discover' style={{ width: 'auto' }}>
