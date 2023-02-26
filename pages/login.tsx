@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import MainButton from '../components/MainButton'
 import useLogin from '../cutoomHooks/useLogin'
 
-const login = () => {
+const Login = () => {
     const user = useSelector((state: any) => state.authSlice.singupUser)
     const { email,
         setEmail,
@@ -62,4 +62,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login

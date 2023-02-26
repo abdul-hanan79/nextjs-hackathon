@@ -5,11 +5,8 @@ import EvenCreations from '../components/EvenCreations'
 import MainButton from '../components/MainButton'
 import useEvents from '../cutoomHooks/useEvents'
 
-const home = () => {
+const Events = () => {
 
-
-  // const { users } = useEvents()
-  // console.log("the vluae of users",users);
   const { goToEventsPage,
     showComponent,
     componentShow,
@@ -106,4 +103,4 @@ const home = () => {
   )
 }
 
-export default home
+export default Events

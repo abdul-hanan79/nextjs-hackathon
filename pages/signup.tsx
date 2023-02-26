@@ -7,7 +7,7 @@ import useSingup from '../cutoomHooks/useSignup'
 
 
 
-const signup = () => {
+const Signup = () => {
     const { userName,
         setUsername,
         email,
@@ -60,4 +60,4 @@ const signup = () => {
     )
 }
 
-export default signup
+export default Signup
