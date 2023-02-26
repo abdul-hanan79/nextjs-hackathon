@@ -20,12 +20,13 @@ type EventFormData = {
     time: string;
     location: string;
     description: string;
-    dataId: string
+    userId: string,
     invitees?: string[];
 };
 
 
-export const submitEvents = createAsyncThunk("todos/submitTodos", async ([title, date, time, location, description, userId]) => {
+export const submitEvents = createAsyncThunk("todos/submitTodos", async (eventData: EventFormData) => {
+    const { title, date, time, location, description, userId } = eventData;
     console.log("submit Todo is running");
     // console.log("the value of description in submit todo", description, attachmentImage);
     console.log("data of item", title, date, time, location, description, userId);
@@ -84,33 +85,33 @@ export const fetchEvents = createAsyncThunk("todos/fetchEvents", async () => {
 });
 
 
-export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (item: TodoType) => {
-    try {
-        console.log("item found in thunk action", item);
+// export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (item: TodoType) => {
+//     try {
+//         console.log("item found in thunk action", item);
 
 
 
-        const desertRef = ref(storage, `todosImages/${item.description}.jpg`);
-        await deleteObject(desertRef)
-        await deleteDoc(doc(db, "todoapp", item.id));
-        console.log("deleteing");
-        return item
-    } catch (error) {
-        console.log("error", error);
+//         const desertRef = ref(storage, `todosImages/${item.description}.jpg`);
+//         await deleteObject(desertRef)
+//         await deleteDoc(doc(db, "todoapp", item.id));
+//         console.log("deleteing");
+//         return item
+//     } catch (error) {
+//         console.log("error", error);
 
-    }
+//     }
 
-})
+// })
 
-interface UpdateTodoArgs {
-    itemEditInput: string;
-    item: {
-        id: string,
-        description: string,
-        attachmentURL: string,
-        createdAt: object
-    }
-}
+// interface UpdateTodoArgs {
+//     itemEditInput: string;
+//     item: {
+//         id: string,
+//         description: string,
+//         attachmentURL: string,
+//         createdAt: object
+//     }
+// }
 // export const updateTodo = createAsyncThunk("todos/updateTodos", async ({ itemEditInput, item }: UpdateTodoArgs) => {
 //     try {
 //         console.log("item found in thunk update action", itemEditInput, item);
@@ -145,11 +146,8 @@ interface UpdateTodoArgs {
 //     }
 // });
 
-export const updateEvent = createAsyncThunk("todos/updateTodos", async ([editTitle,
-    editDate,
-    editTime,
-    editLocation,
-    editDescription, item]) => {
+export const updateEvent = createAsyncThunk("todos/updateTodos", async (args, { getState }) => {
+    const [editTitle, editDate, editTime, editLocation, editDescription, item] = args;
     try {
         // console.log("item found in thunk update action", itemEditInput, item);
 

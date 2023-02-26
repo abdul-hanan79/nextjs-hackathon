@@ -2,14 +2,18 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { submitEvents, fetchEvents, updateEvent } from '../store/eventSlice'
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from 'redux';
+import { RootState } from '../store/Store';
+// import { useRouter } from 'next/router';
 const useEvents = () => {
     const router = useRouter()
 
     const [showComponent, setShowComponent] = useState(false)
-    const auth = useSelector((state) => state.authSlice)
+    const auth = useSelector((state: any) => state.authSlice)
     const data = auth.user
     const [userId, setUserId] = useState("")
-    const eventList = useSelector((state) => state.eventSlice.events)
+    const eventList = useSelector((state: any) => state.eventSlice.events)
 
     console.log("auth logined", auth.isLoggedIn);
     const [title, setTitle] = useState<string>('')
@@ -27,7 +31,8 @@ const useEvents = () => {
     const [loader, setLoader] = useState(false)
     const [isUpdate, setIsUpdate] = useState(false)
     const [alertBox, setAlertBox] = useState(false)
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
     console.log("auth calling back", auth);
     // useEffect(() => {
     //     if (!auth.isLoggedIn && auth.currentUserRequestLoader) {
@@ -52,7 +57,7 @@ const useEvents = () => {
         }
 
 
-    }, [])
+    }, [dispatch])
 
     // const onFileChangeHandler = async (e: any) => {
     //     console.log("file change handler", e.target.files[0]);
@@ -82,6 +87,8 @@ const useEvents = () => {
                 console.log("the value of ", userId);
 
                 await dispatch(submitEvents([title, date, time, location, description, userId]));
+
+
             }
             else {
                 setAlertBox(true)
@@ -103,24 +110,24 @@ const useEvents = () => {
             setDescription('')
         }
     }
-    const todoDeleteHandler = async (item) => {
-        console.log("get into deleteHandler")
-        try {
-            setLoader(true)
-            // await
-            await dispatch(deleteTodo(item))
-            console.log("delte todo is running");
-        }
-        catch (error) {
-            console.log("error in todoDeleteHandler", error);
-        }
-        finally {
-            setLoader(false)
-        }
-    }
+    // const todoDeleteHandler = async (item) => {
+    //     console.log("get into deleteHandler")
+    //     try {
+    //         setLoader(true)
+    //         // await
+    //         await dispatch(deleteTodo(item))
+    //         console.log("delte todo is running");
+    //     }
+    //     catch (error) {
+    //         console.log("error in todoDeleteHandler", error);
+    //     }
+    //     finally {
+    //         setLoader(false)
+    //     }
+    // }
 
 
-    const eventEditHandler = (item: TodoType) => {
+    const eventEditHandler = (item: any) => {
         console.log("updated handler====-", item);
         // setTodoDescription(item.description)
         // setItemEditInput(item.description)
@@ -135,15 +142,11 @@ const useEvents = () => {
         setEditDescription(item.description)
         // setAttendees(item.)
     }
-    const eventUpdateHandler = async (item) => {
+    const eventUpdateHandler = async (item: any) => {
         try {
             setLoader(true)
-            console.log("edit input in update hadnler", itemEditInput);
-            await dispatch(updateEvent([editTitle,
-                editDate,
-                editTime,
-                editLocation,
-                editDescription, item]))
+            // console.log("edit input in update hadnler", itemEditInput);
+            await dispatch(updateEvent([editTitle, editDate, editTime, editLocation, editDescription, item]));
         }
         catch (error) {
             alert(`error in update---< ${error}`)
