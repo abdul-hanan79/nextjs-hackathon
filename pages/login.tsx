@@ -46,13 +46,13 @@ const Login = () => {
                         <div className="form-check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             <label className="form-check-label text-light" >
-                                Remember Me!
+                                Remember Me
                             </label>
                         </div>
                         <div className=''>
                             <MainButton title="Login" onClick={onSubmitHandler} />
                         </div>
-                        <p className='text-light'>don't have account? <MainButton title="singup" className="signup-btn" onClick={goToSignupPage} />
+                        <p className='text-light'>dont have account? <MainButton title="singup" className="signup-btn" onClick={goToSignupPage} />
                         </p>
                     </div>
 
