@@ -1,0 +1,162 @@
+/* .hero-section {
+    background-image: url('https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    min-height: 9vh;
+    padding: 20rem;
+    color: white;
+} */
+:root {
+    --primary-color: #2B2B2B;
+    --secondary-color: #A259FF;
+    --text-primary-color: #ffff;
+    --text-secondary-color: #2B2B2B;
+    --card-bg-color: #3B3B3B;
+    --main-div-padding: 6rem 5rem;
+}
+
+
+.div-heading {
+    font-size: 2.375rem;
+    color: white;
+}
+
+.div-para {
+    font-size: 1.375rem;
+    color: var(--text-secondary-color);
+}
+
+/************HERO SECTION****************** */
+
+
+
+.hero-section {
+    padding: var(--main-div-padding);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.hero-section-container {
+
+    /* padding: 5rem 5rem; */
+}
+
+.hero-heading {
+    font-size: 4.188rem;
+}
+
+/* **************TRENDING COLLECTION****************** */
+.trending-collection-div {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: var(--main-div-padding);
+
+}
+
+/* .trending-collection-row1Col1{
+    margin-left: 9rem;
+} */
+
+
+/* ***********TOP CRETROS******************* */
+.top-creators {
+    padding: var(--main-div-padding);
+    background-color: var(--primary-color);
+}
+
+.top-creators .top-creators-button,
+.discover .discover-btn,
+.discover .discover-btn-1 {
+    background-color: var(--primary-color) !important;
+
+
+}
+
+.discover .discover-btn-1 {
+    display: none;
+}
+
+
+
+/* ******************BROWSE CATERGORIES***************************** */
+.discover {
+    padding: var(--main-div-padding);
+    background-color: var(--primary-color);
+}
+
+.browse-categories {
+    background-color: var(--primary-color) !important;
+    /* color: white; */
+    padding: var(--main-div-padding);
+}
+
+
+
+/* *********MAGIC MASHROOMS*************** */
+.magic-mashrooms-div {
+    /* background:  url('../../assests/homePage/mashroomSecondary.png'),linear-gradient(180deg, rgba(162, 89, 255, 0) 0%, #A259FF 100%) ;
+    opacity: 0.7; */
+    background: linear-gradient(180deg, rgba(162, 89, 255, 0) 0%, #A259FF 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    padding: var(--main-div-padding);
+
+}
+
+.magic-mashrooms-row {
+    height: 98vh;
+}
+
+.magic-mashrroms-heading {
+    font-weight: 600;
+    font-size: 51px;
+}
+
+.magic-mashrooms-div .magic-mashrooms-artist-btn {
+    background-color: var(--card-bg-color) !important;
+    border: none !important;
+    font-weight: 400 !important;
+    padding: 9px 15px !important;
+}
+
+.magic-mashrooms-div .magic-mashrooms-btn {
+    background-color: white !important;
+    border: none !important;
+    color: var(--primary-color);
+}
+
+.how-works-div {
+    background-color: var(--primary-color);
+    padding: var(--main-div-padding);
+    color: white;
+}
+
+
+/* ************WEEKLY DIGEST************ */
+.weekly-digest {
+    background-color: var(--primary-color);
+    color: white;
+    padding: var(--main-div-padding);
+
+}
+
+.weekly-digest-container {
+    background-color: var(--card-bg-color);
+    border-radius: 20px;
+    padding: 50px 50px !important;
+}
+
+.main-navbar {
+    color: white;
+    background-color: var(--card-bg-color);
+}
+
+
+/* Login form */
+.signup-btn{
+    background-color: white !important;
+    color: #A259FF;
+    padding: 5px 10px !important ;
+}
+.sign-row{
+    padding: 60px;
+}

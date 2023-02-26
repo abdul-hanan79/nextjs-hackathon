@@ -1,0 +1,116 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { firebase } from "../lib/firebase";
+
+type Event = {
+  title: string;
+  date: Date;
+  description: string;
+  location: string;
+  invitees: string[];
+  creatorId: string;
+};
+
+const CreateEvent = () => {
+  const [event, setEvent] = useState<Event>({
+    title: "",
+    date: new Date(),
+    description: "",
+    location: "",
+    invitees: [],
+    creatorId: "",
+  });
+  const [inviteeEmail, setInviteeEmail] = useState("");
+  const router = useRouter();
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setEvent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleAddInvitee = () => {
+    setEvent((prevState) => ({
+      ...prevState,
+      invitees: [...prevState.invitees, inviteeEmail],
+    }));
+    setInviteeEmail("");
+  };
+
+  const handleRemoveInvitee = (index: number) => {
+    setEvent((prevState) => ({
+      ...prevState,
+      invitees: prevState.invitees.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleCreateEvent = async () => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      const eventId = firebase.firestore().collection("events").doc().id;
+      const newEvent = {
+        ...event,
+        creatorId: user.uid,
+      };
+      await firebase.firestore().collection("events").doc(eventId).set(newEvent);
+      router.push("/");
+    }
+  };
+
+  const handleCancelEvent = async () => {
+    const eventId = router.query.id as string;
+    await firebase.firestore().collection("events").doc(eventId).delete();
+    router.push("/");
+  };
+
+  const handleRSVP = async (response: "yes" | "no") => {
+    const eventId = router.query.id as string;
+    const user = firebase.auth().currentUser;
+    if (user) {
+      await firebase
+        .firestore()
+        .collection("events")
+        .doc(eventId)
+        .collection("attendees")
+        .doc(user.uid)
+        .set({
+          response,
+        });
+    }
+  };
+
+  const creatorId = event.creatorId;
+  const isCreator = creatorId === firebase.auth().currentUser?.uid;
+
+  return (
+    <div>
+      <h1>Create Event</h1>
+      <div>
+        <label htmlFor="title">Title:</label>
+        <input type="text" name="title" onChange={handleInputChange} />
+      </div>
+      <div>
+        <label htmlFor="date">Date:</label>
+        <input type="date" name="date" onChange={handleInputChange} />
+      </div>
+      <div>
+        <label htmlFor="description">Description:</label>
+        <textarea name="description" onChange={handleInputChange}></textarea>
+      </div>
+      <div>
+        <label htmlFor="location">Location:</label>
+        <input type="text" name="location" onChange={handleInputChange} />
+      </div>
+      <div>
+        <label htmlFor="invitees">Invitees:</label>
+        <ul>
+          {event.invitees.map((invitee, index) => (
+            <li key={index}>
+              {invitee}
+              {isCreator && (
+                <button onClick={() => handleRemoveInvitee(index)}>Remove</button>
+             

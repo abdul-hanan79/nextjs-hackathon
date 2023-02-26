@@ -1,0 +1,288 @@
+:root {
+    --primary-color: #2B2B2B;
+    --secondary-color: #A259FF;
+    --text-primary-color: #ffff;
+    --text-secondary-color: #EDEDED;
+    --card-bg-color: #3B3B3B;
+}
+
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+.paragraph {
+    font-size: 1.175rem !important;
+    font-weight: 400 !important;
+    color: var(--text-secondary-color) !important;
+}
+
+/* ********NAVBAR******** */
+.navbar-links {
+    color: white;
+    font-size: 1rem !important;
+    transition: all 0.4s ease-in-out;
+}
+
+.navbar-links:hover {
+    color: var(--secondary-color);
+}
+
+/*************** Button ***********************/
+
+.main-btn {
+    background-color: var(--secondary-color) !important;
+    border: 2px solid var(--secondary-color) !important;
+    box-shadow: none !important;
+    color: var(--text-primary-color);
+    padding: 12px 30px !important;
+    transition: all 3s ease-in !important;
+    border-radius: 15px !important;
+}
+
+.main-btn:hover {
+    transform: translateY(-4px);
+}
+
+.main-btn-text {
+    font-size: 1rem !important;
+    font-weight: 600;
+
+}
+
+
+/* *****************CARD SPACE WALKING******************* */
+.card-space-walking {
+    border-radius: 5px !important;
+}
+
+.space-walking {
+    background-color: var(--card-bg-color) !important;
+    color: white;
+    border-radius: 17px !important;
+}
+
+.card-space-walking .card-body {
+    padding-left: 12px !important;
+}
+
+.space-walking {
+    border-radius: 25px !important;
+}
+
+.space-walking .card-img {
+    border-radius: 0px !important;
+}
+
+
+/* ************CARD TRENDING COLLECTION************* */
+.card-trending-collection {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.card-trending-collection .card-trending {
+    /* background-color: var(--primary-color); */
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+}
+
+.card-trending-collection {
+    color: white;
+    /* background-color: var(--primary-color); */
+}
+
+.card-trending-collection .card-image {
+    background-color: var(--primary-color);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.card-trending-collection .card-body {
+    background-color: var(--primary-color);
+}
+
+.card-trending-collection .trending-collection-btn {
+    padding: 30px 19px;
+    border-radius: 20px;
+    background-color: var(--secondary-color);
+    border: none !important;
+    transition: all 0.4s ease-in;
+}
+
+.card-trending-collection .trending-collection-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-4px);
+
+}
+
+/* **********OverAll Cards*********** */
+.cards-text {
+    font-size: 15px;
+    color: var(--text-secondary-color);
+}
+
+.cards-title {
+    font-size: 1.375rem;
+    color: white;
+    font-weight: 600;
+}
+
+
+
+
+/* *************TOP CREATORS CARD*************** */
+
+
+.top-creators-card {
+    background-color: var(--card-bg-color) !important;
+    border-radius: 8% !important;
+}
+
+.top-creators-card .cards-text {
+    color: #858584;
+}
+
+.cards-text .cards-text-span {
+    color: white;
+}
+
+.top-creators-card .top-creators-img-div {
+    padding: 12px 0px !important;
+    /* justify-content: center; */
+    align-self: center;
+}
+
+.top-creators-card .top-creators-img-div .top-creators-img {
+    width: 120px !important;
+    height: 120px !important;
+
+}
+
+.top-creators-card .top-creators-card-number {
+    border-radius: 50px;
+    background-color: var(--primary-color);
+    color: var(--text-secondary-color);
+    padding: 0px 9px;
+    top: 5%;
+    left: 5%;
+}
+
+/**************BROWSE CATEGORIES********* */
+.browse-categories-card {
+    background-color: var(--card-bg-color) !important;
+    border-radius: 30px !important;
+}
+
+.browse-categories-card-img-div {
+    background-image: url();
+}
+
+.browse-categories-card-img {
+    /* height: 240px !important; */
+}
+
+
+/* ***************CARD Discover**************** */
+.card-main-discover {
+    background-color: var(--card-bg-color) !important;
+    border-radius: 30px !important;
+    color: white;
+
+}
+
+.card-main-discover .about p {
+    color: #858584 !important;
+    font-size: 0.75rem;
+    font-family: monospace;
+    font-weight: 400;
+}
+
+.card-main-discover .about span {
+    font-family: monospace;
+    font-size: 1rem;
+    color: var(--text-secondary-color) !important;
+}
+
+.card-main-discover .cards-title {
+    /* font-family: monospace; */
+}
+
+
+
+/* ***********AUCTION TIMER******************** */
+.auction-timer {
+    background: rgba(59, 59, 59, 0.5);
+
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    width: 50%;
+    padding: 15px 55px !important;
+}
+
+.auction-timer-heading {
+
+    color: white !important;
+    font-size: 0.75rem;
+    font-family: monospace;
+    font-weight: 400;
+}
+
+.auction-timer .number {
+    margin-bottom: -4px;
+}
+
+.auction-timer .number,
+.semicolon {
+    font-weight: 700;
+    font-size: 38px;
+}
+
+.auction-timer .time {
+    font-weight: 400;
+
+    font-size: 12px;
+}
+
+/* ****************CARD HOW WORKD****************** */
+.how-works-card {
+    background-color: var(--card-bg-color) !important;
+    border: none !important;
+    padding: 10px 30px;
+}
+
+.how-works-card .cards-title {
+    font-size: 1.375rem;
+}
+
+.how-works-card .card-text {
+    font-size: 1rem;
+}
+
+.how-works-img-div {
+    align-self: center;
+}
+
+/* .how-works-img {
+    height: 250px !important;
+    width: 250px !important;
+} */
+
+/* *********SUBSCRIBE EMAIL************** */
+.email-input-div {
+    border-radius: 15px;
+
+}
+
+.email-input {
+    /* background-color: red !important; */
+    border-radius: 15px !important;
+    border: none !important;
+
+}
+
+
+/* *************FOOTER******************* */
+.footer {
+    background-color: var(--card-bg-color);
+}
