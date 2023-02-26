@@ -3,7 +3,7 @@ import { Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faUser } from '@fortawesome/free-solid-svg-icons';
 import MainButton from '../components/MainButton'
-import useSingup from '../cutoomHooks/useSignup'
+import useSignup from '../cutoomHooks/useSignup'
 
 
 
@@ -12,13 +12,13 @@ const Signup = () => {
         setUsername,
         email,
         setEmail,
-        password, setPassword, loader, onSubmitHandler } = useSingup()
+        password, setPassword, loader, onSubmitHandler } = useSignup()
     return (
         <Container fluid className='bg-dark'>
             <Row className='justify-content-center align-items-center sign-row gap-5'>
                 <Col lg={5}>
                     <h1 className='text-light'>Welcome to the Event Planner app! </h1>
-                    <h5 className='text-light'>Our real-time collaboration tool makes event planning a breeze. With features such as creating events, inviting attendees, and tracking RSVPs, you can easily stay organized and keep your attendees informed. Whether you're planning a small get-together or a large conference, the Event Planner app helps streamline the event planning process and make it a success. Sign up or log in now to get started!</h5>
+                    <h5 className='text-light'>Our real-time collaboration tool makes event planning a breeze. With features such as creating events, inviting attendees, and tracking RSVPs, you can easily stay organized and keep your attendees informed. Whether youre planning a small get-together or a large conference, the Event Planner app helps streamline the event planning process and make it a success. Sign up or log in now to get started!</h5>
 
                 </Col>
                 <Col lg={3}>

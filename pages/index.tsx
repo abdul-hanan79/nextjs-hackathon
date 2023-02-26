@@ -32,7 +32,7 @@ const Home: NextPage = () => {
             <Col lg={6} md={6} sm={12} >
               <div className=''>
                 <h1 className='hero-heading'>Welcome to the Event Planner app! </h1>
-                <p className='paragraph hero-para text-light'>Our real-time collaboration tool makes event planning a breeze. With features such as creating events, inviting attendees, and tracking RSVPs, you can easily stay organized and keep your attendees informed. Whether you're planning a small get-together or a large conference, the Event Planner app helps streamline the event planning process and make it a success. Sign up or log in now to get started!</p>
+                <p className='paragraph hero-para text-light'>Our real-time collaboration tool makes event planning a breeze. With features such as creating events, inviting attendees, and tracking RSVPs, you can easily stay organized and keep your attendees informed. Whether youre planning a small get-together or a large conference, the Event Planner app helps streamline the event planning process and make it a success. Sign up or log in now to get started!</p>
                 <MainButton title="Explore Events" onClick={goToEventsPage} />
 
                 <Row className='mt-5'>
