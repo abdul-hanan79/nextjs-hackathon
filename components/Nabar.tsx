@@ -11,7 +11,7 @@ const Nabar = () => {
     return (
         <Navbar  expand="lg" fixed="top">
             <Container className='justify-content-center'>
-                <div className=''><Link to="/"> <img src={Logo} alt='logo' /></Link></div>
+                {/* <div className=''><Link to="/"> <img src={Logo} alt='logo' /></Link></div> */}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className='bg-light'>
                     <Nav className="bg-dark  ">

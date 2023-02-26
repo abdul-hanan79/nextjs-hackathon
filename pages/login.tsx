@@ -3,7 +3,7 @@ import { Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import MainButton from '../components/MainButton'
 import useLogin from '../cutoomHooks/useLogin'
-
+import Image from 'next/image';
 const Login = () => {
     const user = useSelector((state: any) => state.authSlice.singupUser)
     const { email,
@@ -18,11 +18,11 @@ const Login = () => {
             <Row className='justify-content-center align-items-center gap-5'>
                 <Col lg={5}>
 
-                    <img src="https://c8.alamy.com/comp/2AAACBB/doodle-hand-drawn-element-of-new-year-celebration-in-neon-color-2AAACBB.jpg" className='img-fluid' />
+                    <Image src="https://c8.alamy.com/comp/2AAACBB/doodle-hand-drawn-element-of-new-year-celebration-in-neon-color-2AAACBB.jpg" className='img-fluid' alt="image" />
                 </Col>
                 <Col lg={4}>
-                    <h1 className='text-center text-light'>Login and Join us!</h1>
-                    <p>welcome to our application!</p>
+                    <h1 className='text-center text-light'>Login and Join us</h1>
+                    <p>welcome to our application</p>
                     <div className='p-2'>
                         <InputGroup className="mb-3 input-form">
                             <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
