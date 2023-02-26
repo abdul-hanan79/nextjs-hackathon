@@ -146,40 +146,42 @@ export const fetchEvents = createAsyncThunk("todos/fetchEvents", async () => {
 //     }
 // });
 
-export const updateEvent = createAsyncThunk("todos/updateTodos", async (args, { getState }) => {
-    const [editTitle, editDate, editTime, editLocation, editDescription, item] = args;
-    try {
-        // console.log("item found in thunk update action", itemEditInput, item);
+export const updateEvent = createAsyncThunk(
+    "todos/updateTodos",
+    async (args, { getState }) => {
+        const [editTitle, editDate, editTime, editLocation, editDescription, item] = args;
+        try {
+            // console.log("item found in thunk update action", itemEditInput, item);
 
 
-        // !IMPORT TO DO 
-        // const desertRef = ref(storage, `todosImages/${item.description}.jpg`);
-        // await deleteObject(desertRef)
-        // await deleteDoc(doc(db, "todoapp", item.id))
-        // let filteredTodos = todos.filter((todo) => item.id !== todo.id)
-        // setTodos(filteredTodos)
-        await updateDoc(doc(db, "event", item.id), {
-            title: editTitle,
-            date: editDate,
-            time: editTime,
-            location: editLocation,
-            description: editDescription,
+            // !IMPORT TO DO 
+            // const desertRef = ref(storage, `todosImages/${item.description}.jpg`);
+            // await deleteObject(desertRef)
+            // await deleteDoc(doc(db, "todoapp", item.id))
+            // let filteredTodos = todos.filter((todo) => item.id !== todo.id)
+            // setTodos(filteredTodos)
+            await updateDoc(doc(db, "event", item.id), {
+                title: editTitle,
+                date: editDate,
+                time: editTime,
+                location: editLocation,
+                description: editDescription,
 
-        });
-        return {
-            editTitle,
-            editDate,
-            editTime,
-            editLocation,
-            editDescription, item
+            });
+            return {
+                editTitle,
+                editDate,
+                editTime,
+                editLocation,
+                editDescription, item
+            }
+
+        } catch (error) {
+            alert(`error in update todo  ${error}`)
         }
 
-    } catch (error) {
-        alert(`error in update todo  ${error}`)
-    }
 
-
-})
+    })
 // Define your slice
 const eventSlice = createSlice({
     name: 'eventSlice',

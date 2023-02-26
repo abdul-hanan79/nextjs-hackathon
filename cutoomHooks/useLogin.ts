@@ -5,14 +5,17 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../store/authSlice'
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
+import { RootState } from '../store/Store'
 const useLogin = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loader, setLoader] = useState(false)
     const router = useRouter()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
 
-    const auth = useSelector((state) => state.authSlice)
+
+    const auth = useSelector((state: any) => state.authSlice)
     // console.log("auth is login", auth.isLoggedIn);
     useEffect(() => {
         if (auth.isLoggedIn) {

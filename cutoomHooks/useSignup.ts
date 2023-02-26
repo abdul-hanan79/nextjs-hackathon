@@ -1,9 +1,11 @@
 import { async } from '@firebase/util'
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 // import { auth, createUserWithEmailAndPassword } from '../config/Firebase'
 import { signupUser } from '../store/authSlice'
+import { RootState } from '../store/Store'
 import { submitUser } from '../store/userSlice'
 
 // import { toast } from "react-toastify";
@@ -14,7 +16,8 @@ const useSingup = () => {
     const [password, setPassword] = useState("")
     const [loader, setLoader] = useState(false)
     const router = useRouter()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
+
     console.log("the value of username", userName);
     console.log("the value of email", email);
     console.log("the value of password", password);

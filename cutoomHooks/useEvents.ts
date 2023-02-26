@@ -86,7 +86,26 @@ const useEvents = () => {
                 console.log("the value of ", description);
                 console.log("the value of ", userId);
 
-                await dispatch(submitEvents([title, date, time, location, description, userId]));
+                interface EventFormData {
+                    title: string;
+                    date: string;
+                    time: string;
+                    location: string;
+                    description: string;
+                    userId: string;
+                }
+
+                const eventFormData: EventFormData = {
+                    title,
+                    date,
+                    time,
+                    location,
+                    description,
+                    userId,
+                };
+
+                await dispatch(submitEvents(eventFormData));
+
 
 
             }
@@ -146,7 +165,17 @@ const useEvents = () => {
         try {
             setLoader(true)
             // console.log("edit input in update hadnler", itemEditInput);
-            await dispatch(updateEvent([editTitle, editDate, editTime, editLocation, editDescription, item]));
+            const eventFormData = {
+                editTitle,
+                editDate,
+                editTime,
+                editLocation,
+                editDescription,
+                userId,
+            };
+
+            await dispatch(submitEvents(eventFormData));
+            // await dispatch(updateEvent([editTitle, editDate, editTime, editLocation, editDescription, item]));
         }
         catch (error) {
             alert(`error in update---< ${error}`)
