@@ -1,20 +1,20 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { submitEvents, fetchEvents, updateEvent } from '../store/eventSlice'
+import { submitEvents, fetchEvents, updateEvent, deleteEvent } from '../store/eventSlice'
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from 'redux';
 import { RootState } from '../store/Store';
+import authSlice from '../store/authSlice';
 // import { useRouter } from 'next/router';
 const useEvents = () => {
     const router = useRouter()
-
     const [showComponent, setShowComponent] = useState(false)
     const auth = useSelector((state: any) => state.authSlice)
-    const data = auth.user
-    const [userId, setUserId] = useState("")
-    const eventList = useSelector((state: any) => state.eventSlice.events)
+    const data = auth.user.uid
+        const [userId, setUserId] = useState("")
 
+    const eventList = useSelector((state: any) => state.eventSlice.events)
     console.log("auth logined", auth.isLoggedIn);
     const [title, setTitle] = useState<string>('')
     const [date, setDate] = useState('')
@@ -41,7 +41,6 @@ const useEvents = () => {
     //         router.push("/login");
     //     }
     // }, [auth])
-
     useEffect(() => {
         console.log("UseTodos component just render");
         try {
@@ -84,26 +83,24 @@ const useEvents = () => {
                 console.log("the value of ", time);
                 console.log("the value of ", location);
                 console.log("the value of ", description);
-                console.log("the value of ", userId);
-
+                console.log("the value of user id", userId);
                 interface EventFormData {
                     title: string;
-                    date: string;
+                    date: Date;
                     time: string;
                     location: string;
                     description: string;
                     userId: string;
                 }
-
                 const eventFormData: EventFormData = {
                     title,
-                    date,
+                    date: new Date(date),
                     time,
                     location,
                     description,
-                    userId,
+                    userId: data,
                 };
-
+                console.log("event data id", eventFormData.userId);
                 await dispatch(submitEvents(eventFormData));
 
 
@@ -120,8 +117,10 @@ const useEvents = () => {
             console.log("error on onTodoSubmitHandler", e)
         }
         finally {
+            console.log("finnally is working");
             setLoader(false)
             setShowComponent(false)
+            console.log("the value of show case", showComponent);
             setTitle('')
             setDate('')
             setTime('')
@@ -192,27 +191,7 @@ const useEvents = () => {
     //         doc.ref.delete();
     //     });
     // }
-    const onTodoDeleteAllHandler = async () => {
-        console.log("get into deleteHandler")
-        // try {
-        //     setLoader(true)
-        //     const desertRef = ref(storage, `todosImages/`);
-        //     const firestore = firebase.firestore();
-        //     const collectionRef = firestore.collection("your-collection-name");
-        //     deleteAllDocuments(collectionRef);
-        //     let filteredTodos: TodoType[] = []
-        //     setTodos(filteredTodos)
-
-        // }
-        // catch (error) {
-        //     console.log("error in todoDeleteHandler", error);
-
-        // }
-        // finally {
-        //     setLoader(false)
-        // }
-    }
-
+   
     const goToEventsPage = () => {
         if (auth.isLoggedIn) {
 
@@ -225,6 +204,21 @@ const useEvents = () => {
     }
     const componentShow = () => {
         setShowComponent(true)
+    }
+    const eventDeleteHandler = async (event) => {
+        console.log("event is", event)
+        try {
+
+            setLoader(true)
+            await dispatch(deleteEvent(event))
+
+        }
+        catch (error) {
+            alert("error in event delete handler", error)
+        }
+        finally {
+            setLoader(false)
+        }
     }
 
     return {
@@ -258,7 +252,8 @@ const useEvents = () => {
         isUpdate,
         eventEditHandler,
         eventUpdateHandler,
-        eventId
+        eventId,
+        eventDeleteHandler
     }
 }
 

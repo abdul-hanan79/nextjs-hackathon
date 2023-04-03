@@ -31,7 +31,7 @@ const useSingup = () => {
             // console.log("response user+++++>", response.user);
             // sessionStorage.setItem('Token', response.user.accessToken);
             await dispatch(signupUser({ email, password }))
-            await dispatch(submitUser({ userName, email, password }))
+            // await dispatch(submitUser({ userName, email, password }))
             // alert('Successfully singup!');
             router.push('/login')
         }

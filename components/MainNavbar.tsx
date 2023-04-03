@@ -9,7 +9,7 @@ import useEvents from '../cutoomHooks/useEvents';
 import { useSelector } from 'react-redux';
 import authSlice from '../store/authSlice';
 function MainNavbar() {
-  const auth = useSelector((state:any) => state.authSlice)
+  const auth = useSelector((state: any) => state.authSlice)
   console.log("auth slice in navbare", auth.isLoggedIn);
   const router = useRouter()
   const { goToEventsPage } = useEvents()
@@ -21,7 +21,7 @@ function MainNavbar() {
   }
 
   return (
-    <Navbar bg="dark"  expand="lg" className="main-navbar">
+    <Navbar bg="dark" expand="lg" className="main-navbar">
       <Container>
         <Navbar.Brand href="#home">Event Planner Application</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

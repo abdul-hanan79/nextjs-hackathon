@@ -14,11 +14,14 @@ import authSlice, { fetchCurrentUser } from '../store/authSlice'
 // import styles from '../styles/Home.module.css'
 // import '../styles/landingPage.module.css'
 import Browse from '../sections/Browse'
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit'
+import { RootState } from '../store/Store'
 const Home: NextPage = () => {
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(fetchCurrentUser());
-  // }, [dispatch]);
+  const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
   // const currentUser = useSelector((state) => state.authSlice.user?.email)
   // console.log("current user", currentUser);
   const { goToEventsPage } = useEvents()

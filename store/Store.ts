@@ -3,7 +3,7 @@ import authSlice from "./authSlice";
 import eventSlice from "./eventSlice";
 import userSlice from "./userSlice";
 
-const store = configureStore({
+const Store = configureStore({
   reducer: {
     authSlice,
     userSlice,
@@ -11,5 +11,5 @@ const store = configureStore({
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export default store;
+export type RootState = ReturnType<typeof Store.getState>;
+export default Store;

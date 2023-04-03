@@ -14,7 +14,7 @@ import { db, storage } from "../config/Firebase";
 // import { TodoType } from "../types/TodoType";
 
 
-export const submitUser = createAsyncThunk("user/submitUser", async (item) => {
+export const submitUser = createAsyncThunk("user/submitUser", async (item: any) => {
     console.log("submit user is running");
     console.log("the value of user details", item?.userName, item?.email, item?.password);
     try {
@@ -38,29 +38,29 @@ export const submitUser = createAsyncThunk("user/submitUser", async (item) => {
         console.log("error in submit hadnler")
     }
 })
-export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-    console.log("get todos method");
+// export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
+//     console.log("get todos method");
 
-    try {
-        const querySnapshot = await getDocs(collection(db, "todoapp"));
-        let todosList: TodoType[] = [];
-        querySnapshot.forEach((doc) => {
-            todosList.push({
-                attachmentURL: doc.data()?.attachmentURL,
-                description: doc.data()?.description,
-                id: doc.id,
-                createdAt: doc.data()?.createdAt,
-            });
-        });
+//     try {
+//         const querySnapshot = await getDocs(collection(db, "todoapp"));
+//         let todosList: TodoType[] = [];
+//         querySnapshot.forEach((doc) => {
+//             todosList.push({
+//                 attachmentURL: doc.data()?.attachmentURL,
+//                 description: doc.data()?.description,
+//                 id: doc.id,
+//                 createdAt: doc.data()?.createdAt,
+//             });
+//         });
 
-        console.log("todos in action - slice", todosList);
-        return todosList;
-    } catch (error) {
-        console.log("================catch====================");
-        console.log(error);
-        console.log("====================================");
-    }
-});
+//         console.log("todos in action - slice", todosList);
+//         return todosList;
+//     } catch (error) {
+//         console.log("================catch====================");
+//         console.log(error);
+//         console.log("====================================");
+//     }
+// });
 
 
 
@@ -72,16 +72,16 @@ const userSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchTodos.fulfilled, (state, action) => {
-            console.log("state in extra builder", state)
-            console.log("fetch todo in extra reducers", action.payload);
-            let newState: any = {
-                ...state,
-                users: action.payload,
-            };
-            console.log("fetched data ", newState);
-            return newState;
-        });
+        // builder.addCase(fetchTodos.fulfilled, (state, action) => {
+        //     console.log("state in extra builder", state)
+        //     console.log("fetch todo in extra reducers", action.payload);
+        //     let newState: any = {
+        //         ...state,
+        //         users: action.payload,
+        //     };
+        //     console.log("fetched data ", newState);
+        //     return newState;
+        // });
         builder.addCase(submitUser.fulfilled, (state, action) => {
             console.log("submit case in extra reducer", action.payload);
             // setTodos([...todos, { ...newDoc, id: docRef.id }])

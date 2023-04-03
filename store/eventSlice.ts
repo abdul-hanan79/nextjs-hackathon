@@ -1,4 +1,3 @@
-// import { async } from "@firebase/util";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
 
@@ -12,8 +11,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../config/Firebase";
 import { EventType } from "../types/EventType";
-// import { EditIcon } from "@chakra-ui/icons";
-// import { TodoType } from "../types/TodoType";
+
 type EventFormData = {
     title: string;
     date: Date;
@@ -25,7 +23,7 @@ type EventFormData = {
 };
 
 
-export const submitEvents = createAsyncThunk("todos/submitTodos", async (eventData: EventFormData) => {
+export const submitEvents = createAsyncThunk("eventSlice/submitEvents", async (eventData: EventFormData) => {
     const { title, date, time, location, description, userId } = eventData;
     console.log("submit Todo is running");
     // console.log("the value of description in submit todo", description, attachmentImage);
@@ -56,7 +54,7 @@ export const submitEvents = createAsyncThunk("todos/submitTodos", async (eventDa
         console.log("error in submit hadnler")
     }
 })
-export const fetchEvents = createAsyncThunk("todos/fetchEvents", async () => {
+export const fetchEvents = createAsyncThunk("eventSlice/fetchEvents", async () => {
     console.log("get events method");
 
     try {
@@ -84,7 +82,19 @@ export const fetchEvents = createAsyncThunk("todos/fetchEvents", async () => {
     }
 });
 
+export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (event) => {
+    try {
+        console.log("item found in thunk action", event);
 
+        await deleteDoc(doc(db, "events", event?.id));
+        console.log("deleteing");
+        return event
+    } catch (error) {
+        console.log("error", error);
+
+    }
+
+})
 // export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (item: TodoType) => {
 //     try {
 //         console.log("item found in thunk action", item);
@@ -267,7 +277,22 @@ const eventSlice = createSlice({
             return newState;
         });
 
+        builder.addCase(deleteEvent.fulfilled, (state, action) => {
+            console.log("add case in extra redyce", action.payload);
+            const events = state.events;
+            const deleteEvent = action.payload;
+            // if (!item) {
+            //     return state;
+            // }
+            let filteredEvents = events.filter((event) => deleteEvent.id !== event.id);
+            let newState: any = {
+                ...state,
+                events: filteredEvents,
+            };
 
+            console.log("new state", newState);
+            return newState;
+        });
 
     },
 });

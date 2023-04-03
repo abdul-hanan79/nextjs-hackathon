@@ -4,6 +4,7 @@ import CardDiscover from '../components/CardDiscover'
 import EvenCreations from '../components/EvenCreations'
 import MainButton from '../components/MainButton'
 import useEvents from '../cutoomHooks/useEvents'
+import { useSelector } from 'react-redux'
 
 const Events = () => {
 
@@ -22,8 +23,11 @@ const Events = () => {
     editLocation,
     isUpdate,
     eventId,
-    editDescription, eventEditHandler, eventUpdateHandler } = useEvents()
+    editDescription, eventEditHandler, eventUpdateHandler,eventDeleteHandler } = useEvents()
   console.log("the value of evenList", eventList);
+  console.log("showComponent", showComponent);
+  const userId = useSelector((state: any) => state.authSlice.user.uid)
+  console.log("user id in events",userId);
   return (
     <div>
       <h1>this is events page</h1>
@@ -31,8 +35,6 @@ const Events = () => {
       {showComponent && <Container className='bg-dark'><Row className='justify-content-center'><Col lg={5}><EvenCreations /></Col></Row></Container>}
       <Container>
         <Row>
-
-
           {eventList && eventList.map((event: any, index: number) => {
             return (
               <Col key={index} lg={3}>
@@ -85,9 +87,10 @@ const Events = () => {
                     <h1>{event.title}</h1>
                     <h1>{event.description}</h1>
                     <h1>{event.location}</h1>
-                    <h1>{event.date}</h1>
+                    {/* <h1>{event.date}</h1> */}
                     <p>hello world</p>
-                    <MainButton title="edit" onClick={() => eventEditHandler(event)} />
+                    {event.creator == userId && <MainButton title="Edit" onClick={() => eventEditHandler(event)} />}
+                    {event.creator == userId && <MainButton title="Delete" onClick={() => eventDeleteHandler(event)} />}
                   </div>
 
                   // <CardDiscover title="Distant Galaxy" src={SrcImg} avatarPlaceholder={MoonDancerImg} text="MoonDancer" price="1.63" bid="0.33" />

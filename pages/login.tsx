@@ -18,7 +18,7 @@ const Login = () => {
             <Row className='justify-content-center align-items-center gap-5'>
                 <Col lg={5}>
 
-                    <Image src="https://c8.alamy.com/comp/2AAACBB/doodle-hand-drawn-element-of-new-year-celebration-in-neon-color-2AAACBB.jpg" className='img-fluid' alt="image" />
+                    {/* <Image src="https://c8.alamy.com/comp/2AAACBB/doodle-hand-drawn-element-of-new-year-celebration-in-neon-color-2AAACBB.jpg" className='img-fluid' alt="image"  width={500}  height={500} /> */}
                 </Col>
                 <Col lg={4}>
                     <h1 className='text-center text-light'>Login and Join us</h1>
@@ -52,8 +52,8 @@ const Login = () => {
                         <div className=''>
                             <MainButton title="Login" onClick={onSubmitHandler} />
                         </div>
-                        <p className='text-light'>dont have account? <MainButton title="singup" className="signup-btn" onClick={goToSignupPage} />
-                        </p>
+                        <p className='text-light'>dont have account?</p> <MainButton title="singup" className="signup-btn" onClick={goToSignupPage} /> 
+                         
                     </div>
 
                 </Col>

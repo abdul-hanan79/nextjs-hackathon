@@ -8,25 +8,34 @@ import {
 } from "../config/Firebase";
 
 
-
-
 export const fetchCurrentUser = createAsyncThunk(
-    "auth/checkUSerSignIn",
+    "auth/checkUserSignIn",
     async () => {
-        return new Promise((resolve, reject) => {
-            const unsubscribe = onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    console.log("onAuthStateChanged", user);
-
-                    resolve(user);
-                } else {
-                    resolve(false);
-                }
+        try {
+            const user = await new Promise((resolve, reject) => {
+                const unsubscribe = onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        console.log("onAuthStateChanged", user);
+                        let loggedInuser = {
+                            email: user?.email,
+                            id: user?.uid
+                        }
+                        resolve(user);
+                    } else {
+                        resolve(false);
+                    }
+                });
+                unsubscribe();
             });
-            unsubscribe();
-        });
+            console.log("user is", user);
+
+            return { user }; // return a fulfilled action with the user object
+        } catch (error) {
+            return { error }; // return a rejected action with the error object
+        }
     }
 );
+
 export const signupUser = createAsyncThunk('authUser/signupUser', async (item: any) => {
     try {
         const user = await createUserWithEmailAndPassword(auth, item.email, item.password)
@@ -56,7 +65,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: null,
+        user: {},
         isLoggedIn: false,
         error: null,
         signupUser: {},
@@ -92,12 +101,15 @@ const authSlice = createSlice({
             };
         });
         builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
-            console.log("newState after current user start", action);
-
+            console.log("newState after current user start", action.payload.user);
+            // let currentUser={
+            //     email:action.payload?.user.email,
+            //     uid:action.payload?.user.uid
+            // }
             if (action.payload) {
                 let newState: any = {
                     ...state,
-                    user: action.payload,
+                    user: action.payload?.user,
                     isLoggedIn: true,
                     currentUserRequestLoader: false
                 };
