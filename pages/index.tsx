@@ -20,6 +20,7 @@ const Home: NextPage = () => {
   const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
 
   useEffect(() => {
+    console.log("index.ts");
     dispatch(fetchCurrentUser());
   }, [dispatch]);
   // const currentUser = useSelector((state) => state.authSlice.user?.email)

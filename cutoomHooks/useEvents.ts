@@ -6,13 +6,15 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from 'redux';
 import { RootState } from '../store/Store';
 import authSlice from '../store/authSlice';
+import { EditEventFormDataType } from '../types/EditEventFormDataType';
+import { EventFormData } from '../types/EventFormDateType';
 // import { useRouter } from 'next/router';
 const useEvents = () => {
     const router = useRouter()
     const [showComponent, setShowComponent] = useState(false)
     const auth = useSelector((state: any) => state.authSlice)
     const data = auth.user.uid
-        const [userId, setUserId] = useState("")
+    const [userId, setUserId] = useState("")
 
     const eventList = useSelector((state: any) => state.eventSlice.events)
     console.log("auth logined", auth.isLoggedIn);
@@ -22,7 +24,7 @@ const useEvents = () => {
     const [location, setLocation] = useState("")
     const [description, setDescription] = useState("")
     const [editTitle, setEditTitle] = useState<string>('')
-    const [editDate, setEditDate] = useState('')
+    const [editDate, setEditDate] = useState("");
     const [editTime, setEditTime] = useState("")
     const [editLocation, setEditLocation] = useState("")
     const [editDescription, setEditDescription] = useState("")
@@ -42,92 +44,65 @@ const useEvents = () => {
     //     }
     // }, [auth])
     useEffect(() => {
+        console.log("event.ts");
         console.log("UseTodos component just render");
         try {
             if (auth.isLoggedIn) {
                 dispatch(fetchEvents())
+                console.log("user is logined");
             }
             else {
                 router.push('/login')
+                console.log("user is not logined");
+
             }
         }
         catch (e) {
-            console.log("message in fetch todos", e);
+            console.log("message in fetch events", e);
         }
 
 
     }, [dispatch])
 
-    // const onFileChangeHandler = async (e: any) => {
-    //     console.log("file change handler", e.target.files[0]);
-    //     // const file = e.target.files[0]
-    //     // setAttachmentImage(file)
-    //     if (e.target.files > 0) {
-    //         const file = e.target.files[0];
-    //         // const blob = new Blob([file], { type: file.type });
-    //         // Pass the `blob` object to the `submitTodo` function
-    //         //   console.log("file attachment image is",blob)
-    //         setAttachmentImage(file)
-    //         console.log("attachment Image have value", attachmentImage);
-    //     }
-    // }
-
     const submitEvent = async () => {
         try {
-
             if (description != '') {
-                setLoader(true)
-                // setUserId(dataId)
-                console.log("the value of ", title);
-                console.log("the value of ", date);
-                console.log("the value of ", time);
-                console.log("the value of ", location);
-                console.log("the value of ", description);
-                console.log("the value of user id", userId);
-                interface EventFormData {
-                    title: string;
-                    date: Date;
-                    time: string;
-                    location: string;
-                    description: string;
-                    userId: string;
-                }
+                setLoader(true);
                 const eventFormData: EventFormData = {
                     title,
-                    date: new Date(date),
+                    date,
                     time,
                     location,
                     description,
                     userId: data,
                 };
-                console.log("event data id", eventFormData.userId);
                 await dispatch(submitEvents(eventFormData));
-
-
-
+                await dispatch(fetchEvents())
+                // console.log("the state after submitting event:", getState());
             }
             else {
-                setAlertBox(true)
+                setAlertBox(true);
                 setTimeout(() => {
-                    setAlertBox(false)
+                    setAlertBox(false);
                 }, 2000);
             }
         }
         catch (e) {
-            console.log("error on onTodoSubmitHandler", e)
+            console.log("error on onTodoSubmitHandler", e);
         }
         finally {
-            console.log("finnally is working");
-            setLoader(false)
-            setShowComponent(false)
+            console.log("finally is working");
+            setShowComponent(false);
+            setLoader(false);
             console.log("the value of show case", showComponent);
-            setTitle('')
-            setDate('')
-            setTime('')
-            setLocation('')
-            setDescription('')
+            setTitle('');
+            setDate('');
+            setTime('');
+            setLocation('');
+            setDescription('');
         }
     }
+
     // const todoDeleteHandler = async (item) => {
     //     console.log("get into deleteHandler")
     //     try {
@@ -154,17 +129,21 @@ const useEvents = () => {
         setEventId(item.id)
         // setTodoId(item.id)    
         setEditTitle(item.title)
-        setEditDate(item.date)
+        // const dateObj = new Date(item.date);
+        setEditDate(item.date);
         setEditTime(item.time)
         setEditLocation(item.location)
         setEditDescription(item.description)
+        setUserId(item.creator)
         // setAttendees(item.)
     }
-    const eventUpdateHandler = async (item: any) => {
+    const eventUpdateHandler = async (event: any) => {
         try {
             setLoader(true)
+            console.log("event in eventUpdateHandler", event);
             // console.log("edit input in update hadnler", itemEditInput);
-            const eventFormData = {
+
+            const eventFormData: EditEventFormDataType = {
                 editTitle,
                 editDate,
                 editTime,
@@ -172,8 +151,8 @@ const useEvents = () => {
                 editDescription,
                 userId,
             };
-
-            await dispatch(submitEvents(eventFormData));
+            console.log("eventForm data", eventFormData);
+            await dispatch(updateEvent({ eventFormData, event }));
             // await dispatch(updateEvent([editTitle, editDate, editTime, editLocation, editDescription, item]));
         }
         catch (error) {
@@ -181,7 +160,7 @@ const useEvents = () => {
         }
         finally {
             setLoader(false)
-            //setIsUpdate(false)
+            setIsUpdate(false)
         }
     }
 
@@ -191,7 +170,7 @@ const useEvents = () => {
     //         doc.ref.delete();
     //     });
     // }
-   
+
     const goToEventsPage = () => {
         if (auth.isLoggedIn) {
 
@@ -219,6 +198,25 @@ const useEvents = () => {
         finally {
             setLoader(false)
         }
+    }
+    const handleDateChange = (e: any) => {
+        const selectedDate = e.target.value;
+        const isoDate = new Date(selectedDate).toISOString();
+        const dateOnly = isoDate.split('T')[0];
+        console.log("dateOnly", dateOnly);
+        setEditDate(dateOnly);
+        console.log("date=>1", date);
+
+    }
+    const handleSubmitDateChange = (e: any) => {
+        const selectedDate = e.target.value;
+        const isoDate = new Date(selectedDate).toISOString();
+        const dateOnly = isoDate.split('T')[0];
+        setDate(dateOnly);
+        console.log("this is working");
+        console.log("date=>", date);
+
+
     }
 
     return {
@@ -253,7 +251,9 @@ const useEvents = () => {
         eventEditHandler,
         eventUpdateHandler,
         eventId,
-        eventDeleteHandler
+        eventDeleteHandler,
+        handleDateChange,
+        handleSubmitDateChange
     }
 }
 

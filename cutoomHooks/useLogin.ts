@@ -18,6 +18,7 @@ const useLogin = () => {
     const auth = useSelector((state: any) => state.authSlice)
     // console.log("auth is login", auth.isLoggedIn);
     useEffect(() => {
+    console.log("login.ts");
         if (auth.isLoggedIn) {
             router.push("/");
         }

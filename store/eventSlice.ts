@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../config/Firebase";
 import { EventType } from "../types/EventType";
+import { EditEventFormDataType } from "../types/EditEventFormDataType";
 
 type EventFormData = {
     title: string;
@@ -82,7 +83,7 @@ export const fetchEvents = createAsyncThunk("eventSlice/fetchEvents", async () =
     }
 });
 
-export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (event) => {
+export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (event: EventType) => {
     try {
         console.log("item found in thunk action", event);
 
@@ -95,23 +96,6 @@ export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (eve
     }
 
 })
-// export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (item: TodoType) => {
-//     try {
-//         console.log("item found in thunk action", item);
-
-
-
-//         const desertRef = ref(storage, `todosImages/${item.description}.jpg`);
-//         await deleteObject(desertRef)
-//         await deleteDoc(doc(db, "todoapp", item.id));
-//         console.log("deleteing");
-//         return item
-//     } catch (error) {
-//         console.log("error", error);
-
-//     }
-
-// })
 
 // interface UpdateTodoArgs {
 //     itemEditInput: string;
@@ -122,24 +106,9 @@ export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (eve
 //         createdAt: object
 //     }
 // }
-// export const updateTodo = createAsyncThunk("todos/updateTodos", async ({ itemEditInput, item }: UpdateTodoArgs) => {
+// export const updateEvent = createAsyncThunk("todos/updateEvent", async (eventFormData,event) => {
 //     try {
-//         console.log("item found in thunk update action", itemEditInput, item);
-
-//         // Get a reference to the old image file
-//         const oldImageRef = ref(storage, `todosImages/${item.description}.jpg`);
-
-//         // Delete the old image file
-//         await deleteObject(oldImageRef);
-
-//         // Construct the new file name using the new description
-//         const newFileName = `${itemEditInput}.jpg`;
-
-//         // Get a reference to the new image file
-//         const newImageRef = ref(storage, `todosImages/${newFileName}`);
-
-//         // Upload the new image file to Storage
-//         await put(newImageRef, attachmentImage);
+//         // console.log("item found in thunk update action", itemEditInput, item);
 
 //         // Update the document in Firestore with the new description and the new file name
 //         await updateDoc(doc(db, "todoapp", item.id), {
@@ -155,43 +124,36 @@ export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (eve
 //         alert(`error in update todo  ${error}`);
 //     }
 // });
-
-export const updateEvent = createAsyncThunk(
-    "todos/updateTodos",
-    async (args, { getState }) => {
-        const [editTitle, editDate, editTime, editLocation, editDescription, item] = args;
-        try {
-            // console.log("item found in thunk update action", itemEditInput, item);
-
-
-            // !IMPORT TO DO 
-            // const desertRef = ref(storage, `todosImages/${item.description}.jpg`);
-            // await deleteObject(desertRef)
-            // await deleteDoc(doc(db, "todoapp", item.id))
-            // let filteredTodos = todos.filter((todo) => item.id !== todo.id)
-            // setTodos(filteredTodos)
-            await updateDoc(doc(db, "event", item.id), {
-                title: editTitle,
-                date: editDate,
-                time: editTime,
-                location: editLocation,
-                description: editDescription,
-
-            });
-            return {
-                editTitle,
-                editDate,
-                editTime,
-                editLocation,
-                editDescription, item
-            }
-
-        } catch (error) {
-            alert(`error in update todo  ${error}`)
-        }
+// type updateEventType={
+//     eventFormDate:even,
+//     event:
+// }
+type updateEventType = {
+    eventFormData: EditEventFormDataType,
+    event: EventType
+}
+export const updateEvent = createAsyncThunk("eventSlice/updateEvent", async (updateEventData: updateEventType) => {
+    console.log("eventFromDate in updateEvent", updateEventData);
+    const { editTitle, editDate, editTime, editLocation, editDescription } = updateEventData.eventFormData
+    const updateEventId = updateEventData.event.id
+    console.log("updateEventId", updateEventId);
+    try {
+        await updateDoc(doc(db, "events", updateEventId), {
+            title: editTitle,
+            date: editDate,
+            time: editTime,
+            location: editLocation,
+            description: editDescription,
+        });
+        return updateEventData
 
 
-    })
+    } catch (error) {
+        alert(`error in update todo  ${error}`)
+    }
+
+
+})
 // Define your slice
 const eventSlice = createSlice({
     name: 'eventSlice',
@@ -211,41 +173,30 @@ const eventSlice = createSlice({
             return newState;
         });
 
-
-
-        // builder.addCase(deleteTodo.fulfilled, (state, action) => {
-        //     console.log("add case in extra redyce", action.payload);
-        //     const todos: TodoType[] = state.todos;
-        //     const item = action.payload;
-        //     if (!item) {
-        //         return state;
-        //     }
-        //     let filteredTodos = todos.filter((todo) => item.id !== todo.id);
-        //     let newState: any = {
-        //         ...state,
-        //         todos: filteredTodos,
-        //     };
-        //     return newState;
-        // });
-
-        builder.addCase(submitEvents.fulfilled, (state, action) => {
+       builder.addCase(submitEvents.fulfilled, (state, action) => {
             console.log("submit case in extra reducer", action.payload);
             // setTodos([...todos, { ...newDoc, id: docRef.id }])
             let newState: any = {
                 ...state,
                 events: [...state.events, action.payload]
             };
-            console.log("new state is ", newState.events);
-            console.log("new state is ", newState);
-            // fetchTodos()
-            return newState
+            console.log("new state is newState.events ", newState.events);
+            console.log("new state is newState in submit Events", newState);
+           
+            return newState 
         });
         builder.addCase(updateEvent.fulfilled, (state, action) => {
-            // console.log("item  case in extra reduce", action.payload?.itemEditInput);
-            // console.log("update  case in extra reduce", action.payload?.item);
-            const events = state.events;
+
+            console.log("updateEvents", action.payload?.eventFormData);
+            const events = state.events
+            const unUpdateEvent = action.payload?.event
+            const updatedEvent = action.payload?.eventFormData
+            console.log("update Event=>", updateEvent);
+
+
+            // const events = state.events;
             // const item = action.payload?.item;
-            let updatedEvents = events.map((event) => {
+            let updatedEvents = events.map((event: EventType) => {
                 // editTitle,
                 // editDate,
                 // editTime,
@@ -254,14 +205,15 @@ const eventSlice = createSlice({
                 // console.log('====================================');
                 // console.log(item?.id, todo.id);
                 // console.log('====================================');
-                if (item?.id === event.id) {
+                if (unUpdateEvent?.id === event.id) {
                     return {
-                        title: action.payload?.editTitle,
-                        date: action.payload?.editDate,
-                        time: action.payload?.editTime,
-                        location: action.payload?.editLocation,
-                        description: action.payload?.editDescription,
+                        title: updatedEvent?.editTitle,
+                        date: updatedEvent?.editDate,
+                        time: updatedEvent?.editTime,
+                        location: updatedEvent?.editLocation,
+                        description: updatedEvent?.editDescription,
                         id: event?.id,
+                        creator: event?.creator
 
                     }
                 }
@@ -269,22 +221,23 @@ const eventSlice = createSlice({
                     return event;
                 }
             });
-            // console.log("updated Todos", updatedTodos);
+            console.log("updated Events", updatedEvents);
             let newState: any = {
                 ...state,
                 events: updatedEvents,
             };
+            console.log("new state in update Events", newState);
             return newState;
         });
 
         builder.addCase(deleteEvent.fulfilled, (state, action) => {
             console.log("add case in extra redyce", action.payload);
-            const events = state.events;
+            const events: EventType[] = state.events;
             const deleteEvent = action.payload;
             // if (!item) {
             //     return state;
             // }
-            let filteredEvents = events.filter((event) => deleteEvent.id !== event.id);
+            let filteredEvents = events.filter((event) => deleteEvent?.id !== event.id);
             let newState: any = {
                 ...state,
                 events: filteredEvents,

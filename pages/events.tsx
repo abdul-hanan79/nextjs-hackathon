@@ -23,11 +23,12 @@ const Events = () => {
     editLocation,
     isUpdate,
     eventId,
-    editDescription, eventEditHandler, eventUpdateHandler,eventDeleteHandler } = useEvents()
+    editDescription, eventEditHandler, eventUpdateHandler, eventDeleteHandler, handleDateChange } = useEvents()
   console.log("the value of evenList", eventList);
-  console.log("showComponent", showComponent);
+  console.log("value of show component in events.tsx", showComponent);
+
   const userId = useSelector((state: any) => state.authSlice.user.uid)
-  console.log("user id in events",userId);
+  console.log("user id in events", userId);
   return (
     <div>
       <h1>this is events page</h1>
@@ -36,10 +37,11 @@ const Events = () => {
       <Container>
         <Row>
           {eventList && eventList.map((event: any, index: number) => {
+
             return (
               <Col key={index} lg={3}>
 
-                {isUpdate && eventId == event.id ? <div>
+                {isUpdate && eventId == event?.id ? <div>
                   <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Title of Event</Form.Label>
@@ -50,7 +52,7 @@ const Events = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Date:</Form.Label>
-                      <Form.Control type="Date" onChange={(e) => setEditDate(e.target.value)} value={editDate} />
+                      <Form.Control type="Date" onChange={handleDateChange} value={editDate} />
                       <Form.Text className="text-muted">
                         please enter the date of event
                       </Form.Text>
@@ -79,18 +81,19 @@ const Events = () => {
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
-                    <MainButton title="edit" onClick={() => eventUpdateHandler(event)} />
+                    <MainButton title="Update" onClick={() => eventUpdateHandler(event)} />
 
                   </Form>
                 </div> :
                   <div>
-                    <h1>{event.title}</h1>
-                    <h1>{event.description}</h1>
-                    <h1>{event.location}</h1>
+                    <h1>{event?.title}</h1>
+                    <h1>{event?.id}</h1>
+                    <h1>{event?.description}</h1>
+                    <h1>{event?.location}</h1>
                     {/* <h1>{event.date}</h1> */}
                     <p>hello world</p>
-                    {event.creator == userId && <MainButton title="Edit" onClick={() => eventEditHandler(event)} />}
-                    {event.creator == userId && <MainButton title="Delete" onClick={() => eventDeleteHandler(event)} />}
+                    {event?.creator == userId && <MainButton title="Edit" onClick={() => eventEditHandler(event)} />}
+                    {event?.creator == userId && <MainButton title="Delete" onClick={() => eventDeleteHandler(event)} />}
                   </div>
 
                   // <CardDiscover title="Distant Galaxy" src={SrcImg} avatarPlaceholder={MoonDancerImg} text="MoonDancer" price="1.63" bid="0.33" />
