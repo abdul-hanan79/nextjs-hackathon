@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { submitEvents, fetchEvents, updateEvent, deleteEvent } from '../store/eventSlice'
+import { submitEvents, fetchEvents, updateEvent, deleteEvent, updateAttendees } from '../store/eventSlice'
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from 'redux';
 import { RootState } from '../store/Store';
 import authSlice from '../store/authSlice';
-import { EditEventFormDataType } from '../types/EditEventFormDataType';
-import { EventFormData } from '../types/EventFormDateType';
+import { EditEventFormData } from '../types/EditEventFormDataType';
+import { EventFormData } from '../types/EventFormDataType';
 // import { useRouter } from 'next/router';
 const useEvents = () => {
     const router = useRouter()
@@ -23,12 +23,13 @@ const useEvents = () => {
     const [time, setTime] = useState("")
     const [location, setLocation] = useState("")
     const [description, setDescription] = useState("")
+    const [attendees, setAttendees] = useState([]);
+
     const [editTitle, setEditTitle] = useState<string>('')
     const [editDate, setEditDate] = useState("");
     const [editTime, setEditTime] = useState("")
     const [editLocation, setEditLocation] = useState("")
     const [editDescription, setEditDescription] = useState("")
-    const [attendess, setAttendees] = useState("")
     const [eventId, setEventId] = useState("")
     const [loader, setLoader] = useState(false)
     const [isUpdate, setIsUpdate] = useState(false)
@@ -43,26 +44,7 @@ const useEvents = () => {
     //         router.push("/login");
     //     }
     // }, [auth])
-    useEffect(() => {
-        console.log("event.ts");
-        console.log("UseTodos component just render");
-        try {
-            if (auth.isLoggedIn) {
-                dispatch(fetchEvents())
-                console.log("user is logined");
-            }
-            else {
-                router.push('/login')
-                console.log("user is not logined");
 
-            }
-        }
-        catch (e) {
-            console.log("message in fetch events", e);
-        }
-
-
-    }, [dispatch])
 
     const submitEvent = async () => {
         try {
@@ -74,8 +56,10 @@ const useEvents = () => {
                     time,
                     location,
                     description,
+                    attendees,
                     userId: data,
                 };
+                console.log("event from data in sbumit", eventFormData);
                 await dispatch(submitEvents(eventFormData));
                 await dispatch(fetchEvents())
                 // console.log("the state after submitting event:", getState());
@@ -137,13 +121,36 @@ const useEvents = () => {
         setUserId(item.creator)
         // setAttendees(item.)
     }
+    const eventJoinHandler = async (event: EventFormData) => {
+        const eventId = event?.id // replace with the actual ID of the event you want to select
+        const selectedEvent = eventList.find((event:EventFormData) => event.id === eventId);
+        console.log("selected event", selectedEvent);
+
+        let attendees = selectedEvent.attendees;
+        console.log("list of attendees", attendees);
+
+        attendees = [...attendees, data];
+        console.log("user id in attendees", data);
+        console.log("updated list of attendees", attendees);
+        try {
+            const addAttendees = {
+                attendees,
+                event
+            }
+            await dispatch(updateAttendees(addAttendees))
+        }
+        catch (e) {
+            console.log("error in updateAttendees", e);
+        }
+    }
+
     const eventUpdateHandler = async (event: any) => {
         try {
             setLoader(true)
             console.log("event in eventUpdateHandler", event);
             // console.log("edit input in update hadnler", itemEditInput);
 
-            const eventFormData: EditEventFormDataType = {
+            const eventFormData: EditEventFormData = {
                 editTitle,
                 editDate,
                 editTime,
@@ -172,19 +179,34 @@ const useEvents = () => {
     // }
 
     const goToEventsPage = () => {
-        if (auth.isLoggedIn) {
 
-            console.log("go to event page");
-            router.push('/events')
+        console.log("event.ts");
+        console.log("Use events component just render");
+        try {
+            if (auth.isLoggedIn) {
+                router.push('/events')
+                dispatch(fetchEvents())
+                console.log("user is logined");
+            }
+            else {
+                router.push('/login')
+                console.log("user is not logined");
+
+            }
         }
-        else {
-            router.push('/login')
+        catch (e) {
+            console.log("message in fetch events", e);
         }
+
+
+
+
+
     }
     const componentShow = () => {
         setShowComponent(true)
     }
-    const eventDeleteHandler = async (event) => {
+    const eventDeleteHandler = async (event:EventFormData) => {
         console.log("event is", event)
         try {
 
@@ -193,7 +215,7 @@ const useEvents = () => {
 
         }
         catch (error) {
-            alert("error in event delete handler", error)
+            console.log("error in event delete handler", error)
         }
         finally {
             setLoader(false)
@@ -218,7 +240,6 @@ const useEvents = () => {
 
 
     }
-
     return {
         goToEventsPage,
         showComponent,
@@ -253,7 +274,8 @@ const useEvents = () => {
         eventId,
         eventDeleteHandler,
         handleDateChange,
-        handleSubmitDateChange
+        handleSubmitDateChange,
+        eventJoinHandler
     }
 }
 

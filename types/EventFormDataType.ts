@@ -4,5 +4,12 @@ export type EventFormData = {
     time: string;
     location: string;
     description: string;
-    userId: string;
-}
+    userId?: string;
+    attendees?: Array<string>;
+    creator?:string,
+    id?:string
+
+  }
+
+
+  

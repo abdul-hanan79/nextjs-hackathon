@@ -13,28 +13,25 @@ function MainNavbar() {
   console.log("auth slice in navbare", auth.isLoggedIn);
   const router = useRouter()
   const { goToEventsPage } = useEvents()
-  const { goToSignupPage } = useLogin()
-  const goToLoginPage = () => {
-    console.log("login function in navbar");
-
-    router.push('/login')
-  }
+  const { goToSignupPage, gotoSignOut,goToHome,goToLoginPage } = useLogin()
+  
+  
 
   return (
     <Navbar bg="dark" expand="lg" className="main-navbar">
       <Container>
-        <Navbar.Brand href="#home">Event Planner Application</Navbar.Brand>
+        <Navbar.Brand onClick={goToHome}>Event Planner Application</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link onClick={goToHome}>Home</Nav.Link>
             <Nav.Link onClick={goToEventsPage}>Events</Nav.Link>
 
           </Nav>
           {!auth.isLoggedIn ? <div className='d-flex gap-2'>
             <MainButton title="Login" onClick={goToLoginPage} />
             <MainButton title="Signup" onClick={goToSignupPage} />
-          </div> : <MainButton title="SingOut" onClick={goToSignupPage} />}
+          </div> : <MainButton title="SignOut" onClick={gotoSignOut} />}
         </Navbar.Collapse>
       </Container>
     </Navbar>

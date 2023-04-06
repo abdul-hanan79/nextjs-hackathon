@@ -23,8 +23,7 @@ const Home: NextPage = () => {
     console.log("index.ts");
     dispatch(fetchCurrentUser());
   }, [dispatch]);
-  // const currentUser = useSelector((state) => state.authSlice.user?.email)
-  // console.log("current user", currentUser);
+
   const { goToEventsPage } = useEvents()
 
   return (

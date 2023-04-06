@@ -62,6 +62,21 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
     }
 
 })
+export const signOutUser = createAsyncThunk('auth/signOutUser', async () => {
+
+    try {
+        console.log("signoutuser is working");
+        await auth.signOut();
+    }
+    catch (e) {
+        console.log("singOut error", e)
+
+    }
+
+})
+
+
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -102,26 +117,45 @@ const authSlice = createSlice({
         });
         builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
             console.log("newState after current user start", action.payload.user);
-            // let currentUser={
-            //     email:action.payload?.user.email,
-            //     uid:action.payload?.user.uid
-            // }
-            if (action.payload) {
-                let newState: any = {
-                    ...state,
-                    user: action.payload?.user,
-                    isLoggedIn: true,
-                    currentUserRequestLoader: false
-                };
-                console.log("newState after current user", newState);
 
-                return newState;
+            if (action.payload) {
+                if (action.payload?.user) {
+                    let newState: any = {
+                        ...state,
+                        user: action.payload?.user,
+                        isLoggedIn: true,
+                        currentUserRequestLoader: false
+                    };
+                    console.log("newState after current user", newState);
+
+                    return newState;
+                }
+                else {
+                    console.log("false");
+                    let newState: any = {
+                        ...state,
+                    }
+                    console.log("false state", newState);
+                    return newState
+                }
             }
             return {
                 ...state,
                 currentUserRequestLoader: false
             };
         });
+        builder.addCase(signOutUser.fulfilled, (state, action) => {
+            console.log("signoutuser in extra reducer");
+            let newState = {
+                user: {},
+                isLoggedIn: false,
+                error: null,
+                signupUser: {},
+                currentUserRequestLoader: true,
+            }
+            console.log("the new state is", newState);
+            return newState
+        })
     }
 
 })
