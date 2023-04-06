@@ -113,9 +113,9 @@ const Events = () => {
                       {/* {event.attendees.map(attendee => (
                         <li >{attendee} </li>
                       ))} */}
-                      {event.attendees.map((attendee: any) => {
+                      {event.attendees.map((attendee: Array<string>,index:number) => {
                         return (
-                          <li>{attendee}</li>
+                          <li key={index}>{attendee}</li>
                         )
                       })}
                     </ul>
