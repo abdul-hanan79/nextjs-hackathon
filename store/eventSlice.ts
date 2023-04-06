@@ -10,7 +10,6 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "../config/Firebase";
-import { EventType } from "../types/EventType";
 import { EditEventFormData } from "../types/EditEventFormDataType";
 
 import { EventFormData } from "../types/EventFormDataType";
@@ -80,11 +79,11 @@ export const fetchEvents = createAsyncThunk("eventSlice/fetchEvents", async () =
     }
 });
 
-export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (event: EventType) => {
+export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (event: EventFormData) => {
     try {
         console.log("item found in thunk action", event);
 
-        await deleteDoc(doc(db, "events", event?.id));
+        await deleteDoc(doc(db, "events", event!.id!));
         console.log("deleteing");
         return event
     } catch (error) {
@@ -127,12 +126,12 @@ export const deleteEvent = createAsyncThunk('eventSlice/deleteEvent', async (eve
 // }
 type updateEventType = {
     eventFormData: EditEventFormData,
-    event: EventType
+    event: EventFormData
 }
 export const updateEvent = createAsyncThunk("eventSlice/updateEvent", async (updateEventData: updateEventType) => {
     console.log("eventFromDate in updateEvent", updateEventData);
     const { editTitle, editDate, editTime, editLocation, editDescription } = updateEventData.eventFormData
-    const updateEventId = updateEventData.event.id
+    const updateEventId = updateEventData.event!.id!
     console.log("updateEventId", updateEventId);
     try {
         await updateDoc(doc(db, "events", updateEventId), {
@@ -210,7 +209,7 @@ const eventSlice = createSlice({
             const updatedEvent = action.payload?.eventFormData
             console.log("update Event=>", updateEvent);
 
-            let updatedEvents = events.map((event: EventType) => {
+            let updatedEvents = events.map((event: EventFormData) => {
                 if (unUpdateEvent?.id === event.id) {
                     return {
                         title: updatedEvent?.editTitle,
@@ -238,11 +237,11 @@ const eventSlice = createSlice({
         builder.addCase(updateAttendees.fulfilled, (state, action) => {
             console.log("updateEvents", action.payload);
             const events = state.events
-            const unUpdateEvent = action.payload?.event
+            const unUpdateEvent = action.payload?.event!
             // const updatedEvent = action.payload?.attendees
             console.log("update Event=>", updateEvent);
 
-            let updatedEvents = events.map((event: EventType) => {
+            let updatedEvents = events.map((event: EventFormData) => {
                 if (unUpdateEvent?.id === event.id) {
                     return {
                         title: unUpdateEvent.title,
@@ -271,7 +270,7 @@ const eventSlice = createSlice({
 
         builder.addCase(deleteEvent.fulfilled, (state, action) => {
             console.log("add case in extra redyce", action.payload);
-            const events: EventType[] = state.events;
+            const events: EventFormData[] = state.events;
             const deleteEvent = action.payload;
             // if (!item) {
             //     return state;
