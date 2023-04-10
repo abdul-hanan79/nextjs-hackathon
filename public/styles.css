@@ -85,7 +85,8 @@
 .browse-categories {
     background-color: var(--primary-color) !important;
     /* color: white; */
-    padding: var(--main-div-padding);
+    margin-top: 150px;
+    /* padding: var(--main-div-padding); */
 }
 
 
@@ -152,11 +153,12 @@
 
 
 /* Login form */
-.signup-btn{
+.signup-btn {
     background-color: white !important;
     color: #A259FF;
-    padding: 5px 10px !important ;
+    padding: 5px 10px !important;
 }
-.sign-row{
+
+.sign-row {
     padding: 60px;
 }

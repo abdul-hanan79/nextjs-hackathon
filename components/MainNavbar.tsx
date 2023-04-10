@@ -13,19 +13,19 @@ function MainNavbar() {
   console.log("auth slice in navbare", auth.isLoggedIn);
   const router = useRouter()
   const { goToEventsPage } = useEvents()
-  const { goToSignupPage, gotoSignOut,goToHome,goToLoginPage } = useLogin()
-  
-  
+  const { goToSignupPage, gotoSignOut, goToHome, goToLoginPage } = useLogin()
+
+
 
   return (
     <Navbar bg="dark" expand="lg" className="main-navbar">
       <Container>
-        <Navbar.Brand onClick={goToHome}>Event Planner Application</Navbar.Brand>
+        <Navbar.Brand onClick={goToHome} className="text-light fw-bold navbar-brand">Event Planner Application</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link onClick={goToHome}>Home</Nav.Link>
-            <Nav.Link onClick={goToEventsPage}>Events</Nav.Link>
+            <Nav.Link onClick={goToHome} className='fs-5 navbar-links'>Home</Nav.Link>
+            <Nav.Link onClick={goToEventsPage} className='fs-5 navbar-links'>Events</Nav.Link>
 
           </Nav>
           {!auth.isLoggedIn ? <div className='d-flex gap-2'>

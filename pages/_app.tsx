@@ -8,6 +8,9 @@ import { Container } from 'react-bootstrap';
 import '../public/styles.css'
 import Store from '../store/Store'
 import MainNavbar from '../components/MainNavbar'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 // import '@fortawesome/fontawesome-free/css/all.min.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (

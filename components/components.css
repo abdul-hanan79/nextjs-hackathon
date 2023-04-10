@@ -18,14 +18,29 @@ a {
 }
 
 /* ********NAVBAR******** */
-.navbar-links {
-    color: white;
-    font-size: 1rem !important;
-    transition: all 0.4s ease-in-out;
+.navbar-brand {
+    transition: all 0.4s ease-in-out !important;
+
 }
 
-.navbar-links:hover {
-    color: var(--secondary-color);
+.navbar-links {
+    color: white !important;
+    font-size: 1rem !important;
+    transition: all 0.4s ease-in-out !important;
+}
+
+.navbar-links:hover,
+.navbar-brand:hover {
+    color: var(--secondary-color) !important;
+}
+
+.navbar-toggler {
+    background-color: white;
+    border: 2px solid white;
+}
+
+.navbar-toggler-icon {
+    background-color: white;
 }
 
 /*************** Button ***********************/

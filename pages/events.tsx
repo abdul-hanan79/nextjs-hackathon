@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Form, Row } from 'react-bootstrap'
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import CardDiscover from '../components/CardDiscover'
 import EvenCreations from '../components/EvenCreations'
 import MainButton from '../components/MainButton'
 import useEvents from '../cutoomHooks/useEvents'
 import { useSelector } from 'react-redux'
 import { EventFormData } from '../types/EventFormDataType'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faIdCardAlt, faCircleDot, faLocationPin, faCalendarDays, faCircleInfo, faPeopleGroup, faTimesRectangle, faUser, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 const Events = () => {
 
   const { goToEventsPage,
@@ -33,7 +34,7 @@ const Events = () => {
   const [searchQuery, setSearchQuery] = useState({ date: '', time: '', location: '' });
   const [filteredEvents, setFilteredEvents] = useState(eventList);
   useEffect(() => {
-    const filtered = eventList.filter((event:EventFormData) => {
+    const filtered = eventList.filter((event: EventFormData) => {
       console.log("serach query", searchQuery);
       const dateMatch = event.date.includes(searchQuery.date);
       const timeMatch = event.time.includes(searchQuery.time);
@@ -103,27 +104,38 @@ const Events = () => {
 
                   </Form>
                 </div> :
+
                   <div>
-                    <h1>{event?.title}</h1>
-                    <h1>{event?.id}</h1>
-                    <h1>{event?.description}</h1>
-                    <h1>{event?.location}</h1>
-                    <p>Attendees:</p>
-                    <ul>
-                      {/* {event.attendees.map(attendee => (
-                        <li >{attendee} </li>
-                      ))} */}
-                      {event.attendees.map((attendee: Array<string>,index:number) => {
-                        return (
-                          <li key={index}>{attendee}</li>
-                        )
-                      })}
-                    </ul>
-                    {/* <h1>{event.date}</h1> */}
-                    <p>hello world</p>
-                    {event?.creator == userId && <MainButton title="Edit" onClick={() => eventEditHandler(event)} />}
-                    {event?.creator != userId && <MainButton title="Join" onClick={() => eventJoinHandler(event)} />}
-                    {event?.creator == userId && <MainButton title="Delete" onClick={() => eventDeleteHandler(event)} />}
+                    <Card className='event-card'>
+                      <Card.Header><FontAwesomeIcon icon={faIdCardAlt} /> {event?.id}</Card.Header>
+                      <Card.Body>
+                        <Card.Title>Title: {event?.title}</Card.Title>
+                        <Card.Text><FontAwesomeIcon icon={faCircleInfo} />
+                          {event?.description}
+
+                          <p><FontAwesomeIcon icon={faLocationPin} />{event?.location}</p>
+                          <p><FontAwesomeIcon icon={faTimesRectangle} />{event?.time}</p>
+                          <p><FontAwesomeIcon icon={faCalendarDays} />{event?.date}</p>
+                          <p><FontAwesomeIcon icon={faPeopleGroup} />
+
+                            {event.attendees.map((attendee: Array<string>, index: number) => {
+                              return (
+                                <p key={index}><FontAwesomeIcon icon={faCircleDot} /> {attendee}</p>
+                              )
+                            })}
+                          </p>
+                          <p>{<FontAwesomeIcon icon={faUser} />}<span>{event.creator}</span></p>
+
+                        </Card.Text>
+                        <div>  {event?.creator == userId && <MainButton title={<FontAwesomeIcon icon={faEdit} />} onClick={() => eventEditHandler(event)} />}
+                          {event?.creator != userId && <MainButton title="Join" onClick={() => eventJoinHandler(event)} />}
+                          {event?.creator == userId && <MainButton title={<FontAwesomeIcon icon={faTrash} />} onClick={() => eventDeleteHandler(event)} />}</div>
+
+                      </Card.Body>
+                    </Card>
+
+
+
                   </div>
 
                   // <CardDiscover title="Distant Galaxy" src={SrcImg} avatarPlaceholder={MoonDancerImg} text="MoonDancer" price="1.63" bid="0.33" />
