@@ -35,6 +35,7 @@ const Events = () => {
   const [searchQuery, setSearchQuery] = useState({ date: '', time: '', location: '' });
   const [filteredEvents, setFilteredEvents] = useState(eventList);
   useEffect(() => {
+
     const filtered = eventList.filter((event: EventFormData) => {
       console.log("serach query", searchQuery);
       const dateMatch = event?.date.includes(searchQuery.date);
@@ -43,7 +44,7 @@ const Events = () => {
       return dateMatch && timeMatch && locationMatch;
     });
     setFilteredEvents(filtered);
-  }, [eventList, searchQuery]);
+  }, [eventList, searchQuery, showComponent]);
 
   return (
     <div >
@@ -82,7 +83,7 @@ const Events = () => {
       {/* <input type="time" value={searchQuery.time} onChange={(e) => setSearchQuery({ ...searchQuery, time: e.target.value })} /> */}
       {/* <input type="text" value={searchQuery.location} onChange={(e) => setSearchQuery({ ...searchQuery, location: e.target.value })} /> */}
       <div className='m-5'>
-        <MainButton title="create event" onClick={componentShow} />
+        <MainButton title="Create Event" onClick={componentShow} />
         <br />
         {showComponent && <Container className='bg-dark'><Row className='justify-content-center'><Col lg={5}><EvenCreations /></Col></Row></Container>}
       </div>

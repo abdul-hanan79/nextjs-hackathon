@@ -62,13 +62,15 @@ const useEvents = () => {
                 };
                 console.log("event from data in sbumit", eventFormData);
                 await dispatch(submitEvents(eventFormData));
+                setShowComponent(false);
+                console.log("the submit event showcompnent", showComponent);
                 await dispatch(fetchEvents())
                 console.log("this is runnying");
             }
             else {
                 setAlertBox(true);
                 setTimeout(() => {
-                
+
                     setAlertBox(false);
                 }, 2000);
             }
@@ -78,9 +80,8 @@ const useEvents = () => {
         }
         finally {
             console.log("finally is working");
-            setShowComponent(false);
             setLoader(false);
-            console.log("the value of show case", showComponent);
+            // console.log("the value of show case", showComponent);
             setTitle('');
             setDate('');
             setTime('');
