@@ -14,9 +14,9 @@ config.autoAddCss = false
 // import '@fortawesome/fontawesome-free/css/all.min.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={Store}>
+    <Provider store={Store} >
       <MainNavbar />
-      <Component {...pageProps} />
+      <Component {...pageProps} className="component"/>
 
     </Provider>
   )

@@ -51,12 +51,12 @@ a {
     box-shadow: none !important;
     color: var(--text-primary-color);
     padding: 12px 30px !important;
-    transition: all 3s ease-in !important;
+    transition: all 0.3s ease-in !important;
     border-radius: 15px !important;
 }
 
 .main-btn:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px)
 }
 
 .main-btn-text {

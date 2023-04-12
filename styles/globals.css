@@ -12,7 +12,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-
+  background-color: #2B2B2B !important;
+  color: white;
 }
 
 a {
@@ -30,8 +31,8 @@ a {
   }
 
   body {
-    color: white;
-    background: black;
+    color: white !important;
+
   }
 }
 
@@ -41,13 +42,66 @@ a {
   color: white;
   border-radius: 20px !important;
   box-shadow: 2px 2px 16px 0px var(--text-secondary-color);
-  transition: all 0.7s ease-in;
+  transition: all 0.3s ease-in;
+  width: auto !important;
+}
+
+/* .event-id {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-left: 5px;
+}
+.event-id:hover{
+transform: none !important;
+} */
+
+.event-title {
+  font-size: 1.7rem;
+}
+
+.event-description-div,
+.event-location-div,
+.event-list,
+.event-date-div,
+.event-time-div,
+.event-creator-div {
+  font-size: 1.5rem !important;
+}
+
+.event-header-div:hover {
+  transform: none !important;
+
+}
+
+.event-location-div span,
+.event-date-div span,
+.event-description-div span,
+.event-time-div span,
+.event-creator-div span,
+.event-header-div span {
+  margin-left: 9px;
 }
 
 .event-card:hover {
-  transform: translateY(-15px);
+   transform: translateY(-15px);
+} 
+
+.attendees-list {
+  font-size: 1rem;
 }
 
+.event-creator-div,
+.event-header-div {
+  font-size: 1rem !important;
+
+
+}
+
+.event-creator-div {
+  background-color: var(--secondary-color) !important;
+  padding: 5px 2px 5px 2px;
+  border-radius: 20px;
+}
 
 
 @media (max-width:1200px) {

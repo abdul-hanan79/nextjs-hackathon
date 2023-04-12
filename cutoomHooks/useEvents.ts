@@ -14,6 +14,7 @@ const useEvents = () => {
     const [showComponent, setShowComponent] = useState(false)
     const auth = useSelector((state: any) => state.authSlice)
     const data = auth.user.uid
+    console.log("user id in useEvents");
     const [userId, setUserId] = useState("")
 
     const eventList = useSelector((state: any) => state.eventSlice.events)
@@ -62,11 +63,12 @@ const useEvents = () => {
                 console.log("event from data in sbumit", eventFormData);
                 await dispatch(submitEvents(eventFormData));
                 await dispatch(fetchEvents())
-                // console.log("the state after submitting event:", getState());
+                console.log("this is runnying");
             }
             else {
                 setAlertBox(true);
                 setTimeout(() => {
+                
                     setAlertBox(false);
                 }, 2000);
             }
@@ -123,7 +125,7 @@ const useEvents = () => {
     }
     const eventJoinHandler = async (event: EventFormData) => {
         const eventId = event?.id // replace with the actual ID of the event you want to select
-        const selectedEvent = eventList.find((event:EventFormData) => event.id === eventId);
+        const selectedEvent = eventList.find((event: EventFormData) => event.id === eventId);
         console.log("selected event", selectedEvent);
 
         let attendees = selectedEvent.attendees;
@@ -206,7 +208,7 @@ const useEvents = () => {
     const componentShow = () => {
         setShowComponent(true)
     }
-    const eventDeleteHandler = async (event:EventFormData) => {
+    const eventDeleteHandler = async (event: EventFormData) => {
         console.log("event is", event)
         try {
 
@@ -243,6 +245,7 @@ const useEvents = () => {
     return {
         goToEventsPage,
         showComponent,
+        setShowComponent,
         // users,
         componentShow,
         setTitle,
